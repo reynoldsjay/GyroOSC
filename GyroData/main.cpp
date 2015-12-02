@@ -99,6 +99,10 @@ void display(void)
     glColor3f(1.0, 0.0, 0.0);
     glRectf(currX-400.0, currY-400.0, currX+400.0, currY+400.0);
     
+    glColor3f(1.0, 0.0, 0.0);
+    glRectf(-13000.0, 5000.0, -10000.0, 8000.0);
+    
+    
     glPopMatrix();
     glutSwapBuffers();
 }
@@ -180,7 +184,7 @@ void updateDisplay(void)
     
     double val = sqrt((float)(xmax*xmax + ymax*ymax));
     
-    std::cout <<"xmax : " << gyroX <<" ; ymax : " << gyroY << std::endl;
+    //std::cout <<"xmax : " << gyroX <<" ; ymax : " << gyroY << std::endl;
     
     
     
@@ -230,6 +234,12 @@ void reshape(int w, int h)
 }
 void mouse(int button, int state, int x, int y)
 {
+    std::cout << "Mouse x: " << x << " y: " << y << std::endl;
+    if (x > 240 && x < 260 && y > 277 && y < 292) {
+        std::cout << "reset" << std::endl;
+        currX = 0;
+        currY = 0;
+    }
     switch (button) {
         case GLUT_LEFT_BUTTON:
             if (state == GLUT_DOWN)
@@ -293,6 +303,7 @@ int main(int argc, char** argv)
     glutDisplayFunc(display); 
     glutReshapeFunc(reshape); 
     glutIdleFunc(updateDisplay);
+    glutMouseFunc(mouse);
     glutMainLoop();  
     
     IEE_EngineDisconnect();
